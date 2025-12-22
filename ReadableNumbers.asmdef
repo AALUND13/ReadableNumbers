@@ -1,0 +1,22 @@
+{
+    "name": "ReadableNumbers",
+    "references": [
+        "UnboundLib",
+        "TabInfo",
+        "Infoholic",
+        "Unity.TextMeshPro"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "0Harmony.dll",
+        "BepInEx.dll",
+        "Assembly-CSharp.dll",
+        "InControl.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

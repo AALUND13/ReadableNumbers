@@ -1,0 +1,52 @@
+﻿using InControl;
+using ReadableNumbers.Scripts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace ReadableNumbers {
+    public class NumberSuffixesManager : MonoBehaviour {
+        private static DisplayType currentDisplayType = DisplayType.Suffix;
+        private static bool isDisable = false;
+
+        public static DisplayType CurrentDisplayType { get { return !isDisable ? currentDisplayType : DisplayType.None; } }
+
+        public void Update() {
+            if(Input.GetKeyDown(KeyCode.LeftControl)) {
+                CycleDisplayType();
+            }
+
+            if(Input.GetKeyDown(KeyCode.RightControl)) {
+                isDisable = true;
+            } else if(Input.GetKeyUp(KeyCode.RightControl)) {
+                isDisable = false;
+            }
+        }
+
+        void CycleDisplayType() {
+            switch(currentDisplayType) {
+                case DisplayType.Suffix:
+                    currentDisplayType = DisplayType.Name; 
+                    break;
+                case DisplayType.Name:
+                    currentDisplayType = DisplayType.Suffix;
+                    break;
+                default:
+                    currentDisplayType = DisplayType.Suffix; 
+                    break;
+            }
+        }
+
+        public static string DisplayNumber(float number, string format = null) {
+            return InternalNumberSuffixesManager.DisplayNumber(number, CurrentDisplayType, format);
+        }
+
+
+        public static string DisplayNumber(int number, string format = null) {
+            return InternalNumberSuffixesManager.DisplayNumber(number, CurrentDisplayType, format);
+        }
+    }
+}
