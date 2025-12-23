@@ -15,7 +15,7 @@
         "0Harmony.dll",
         "BepInEx.dll",
         "Assembly-CSharp.dll",
-        "InControl.dll"
+        "RSUI.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": []

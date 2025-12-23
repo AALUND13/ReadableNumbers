@@ -12,6 +12,7 @@ namespace ReadableNumbers {
 
     [BepInDependency("com.willuwontu.rounds.tabinfo", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.penial.rounds.Infoholic", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Systems.R00t.RSUI", BepInDependency.DependencyFlags.SoftDependency)]
 
     [BepInPlugin(modId, ModName, "1.0.0")]
     [BepInProcess("Rounds.exe")]
@@ -37,6 +38,9 @@ namespace ReadableNumbers {
             List<BaseUnityPlugin> Plugins = (List<BaseUnityPlugin>)typeof(BepInEx.Bootstrap.Chainloader).GetField("_plugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             if(Plugins.Exists(plugin => plugin.Info.Metadata.GUID == "com.penial.rounds.Infoholic")) {
                 InfoholicGameStatusUpdatePatch.Patch(Harmony);
+            }
+            if(Plugins.Exists(plugin => plugin.Info.Metadata.GUID == "Systems.R00t.RSUI")) {
+                RootStatUIStatDesplyerPatch.Patch(Harmony);
             }
 
             Unbound.RegisterClientSideMod(modId);
