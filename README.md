@@ -1,7 +1,7 @@
 # Readable Numbers
 
 The **Readable Numbers** ROUNDS mod is a mod that make number slightly more readable for **Tabinfo**, **Infoholic**, and **Root's Stats UI**.
-For "large" number like 1,000,000, it will display as 1M.
+For "large" number like **1,000,000**, it will display as **1M**.
 
 ## Controls
 
