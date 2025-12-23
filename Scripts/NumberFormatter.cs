@@ -57,8 +57,8 @@ namespace ReadableNumbers {
             }
 
             if(powerOf1000 <= 0) {
-                float value = isNegative ? -absNumber : absNumber;
-                return value.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}", CultureInfo.InvariantCulture);
+                return number.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}", 
+                    CultureInfo.InvariantCulture);
             }
 
             switch(displayType) {
