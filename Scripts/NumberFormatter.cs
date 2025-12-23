@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ReadableNumbers.Scripts {
+namespace ReadableNumbers {
     public enum DisplayType {
         None,
         Name,
         Suffix
     }
 
-    internal static class InternalNumberSuffixesManager {
+    public static class NumberFormatter {
         public static List<NumberSuffix> suffixes = new List<NumberSuffix>() {
             new NumberSuffix("K", "Thousand"),
             new NumberSuffix("M", "Million"),
@@ -58,7 +58,7 @@ namespace ReadableNumbers.Scripts {
 
             if(powerOf1000 <= 0) {
                 float value = isNegative ? -absNumber : absNumber;
-                return (isNegative ? "-" : "") + (value.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}",CultureInfo.InvariantCulture));
+                return value.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}", CultureInfo.InvariantCulture);
             }
 
             switch(displayType) {

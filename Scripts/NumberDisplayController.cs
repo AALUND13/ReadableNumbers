@@ -1,6 +1,4 @@
-﻿using InControl;
-using ReadableNumbers.Scripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ReadableNumbers {
-    public class NumberSuffixesManager : MonoBehaviour {
+    public class NumberDisplayController : MonoBehaviour {
         private static DisplayType currentDisplayType = DisplayType.Suffix;
-        private static bool isDisable = false;
 
+        public static bool isDisable { get; private set; } = false;
         public static DisplayType CurrentDisplayType { get { return !isDisable ? currentDisplayType : DisplayType.None; } }
 
         public void Update() {
@@ -41,12 +39,12 @@ namespace ReadableNumbers {
         }
 
         public static string DisplayNumber(float number, string format = null) {
-            return InternalNumberSuffixesManager.DisplayNumber(number, CurrentDisplayType, format);
+            return NumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
         }
 
 
         public static string DisplayNumber(int number, string format = null) {
-            return InternalNumberSuffixesManager.DisplayNumber(number, CurrentDisplayType, format);
+            return NumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace ReadableNumbers.Patches.Compatibility {
 
                     if(stat.name == "Damage") {
                         stat.displayValue = (Player player) => {
-                            return NumberSuffixesManager.DisplayNumber(float.Parse(displayValue(player)));
+                            return NumberDisplayController.DisplayNumber(float.Parse(displayValue(player)));
                         };
                     } else if(stat.name == "HP") {
                         stat.displayValue = (Player player) => {
-                            return $"{NumberSuffixesManager.DisplayNumber(player.data.health)}/{NumberSuffixesManager.DisplayNumber(player.data.maxHealth)}";
+                            return $"{NumberDisplayController.DisplayNumber(player.data.health)}/{NumberDisplayController.DisplayNumber(player.data.maxHealth)}";
                         };
                     } else {
                         var transpiler = AccessTools.Method(typeof(TabInfoManagerPatch), nameof(PatchTranspiler));
@@ -42,8 +42,8 @@ namespace ReadableNumbers.Patches.Compatibility {
             MethodInfo stringFormat2 = AccessTools.Method(typeof(string), nameof(string.Format), new Type[] { typeof(string), typeof(object), typeof(object) });
             MethodInfo stringFormat3 = AccessTools.Method(typeof(string), nameof(string.Format), new Type[] { typeof(string), typeof(object), typeof(object), typeof(object) });
 
-            MethodInfo DisplayNumberFloat = AccessTools.Method(typeof(NumberSuffixesManager), nameof(NumberSuffixesManager.DisplayNumber), new Type[] { typeof(float), typeof(string) });
-            MethodInfo DisplayNumberInt = AccessTools.Method(typeof(NumberSuffixesManager), nameof(NumberSuffixesManager.DisplayNumber), new Type[] { typeof(int), typeof(string) });
+            MethodInfo DisplayNumberFloat = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayNumber), new Type[] { typeof(float), typeof(string) });
+            MethodInfo DisplayNumberInt = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayNumber), new Type[] { typeof(int), typeof(string) });
 
             // Collect all string.Format calls (indices)
             var formatCalls = new List<int>();

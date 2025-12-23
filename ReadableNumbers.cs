@@ -32,13 +32,11 @@ namespace ReadableNumbers {
             Harmony = new Harmony(modId);
             Harmony.PatchAll();
 
-            gameObject.AddComponent<NumberSuffixesManager>();
+            gameObject.AddComponent<NumberDisplayController>();
 
             List<BaseUnityPlugin> Plugins = (List<BaseUnityPlugin>)typeof(BepInEx.Bootstrap.Chainloader).GetField("_plugins", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             if(Plugins.Exists(plugin => plugin.Info.Metadata.GUID == "com.penial.rounds.Infoholic")) {
-                this.ExecuteAfterFrames(5, () => {
-                    InfoholicGameStatusUpdatePatch.Patch(Harmony);
-                });
+                InfoholicGameStatusUpdatePatch.Patch(Harmony);
             }
 
             Unbound.RegisterClientSideMod(modId);
