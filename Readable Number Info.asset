@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Readable Number Info
   m_EditorClassIdentifier: 
   ModName: ReadableNumbers
-  Author: 
-  Version: 1.0.0
+  Author: AALUND13
+  Version: 1.0.1
   WebsiteURL: https://github.com/AALUND13/ReadableNumbers
   Description: The "Readable Numbers" ROUNDS mod is a mod that make number slightly
     more readable for "Tabinfo" and "Infoholic".
