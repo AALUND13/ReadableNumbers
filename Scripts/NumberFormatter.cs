@@ -63,7 +63,7 @@ namespace ReadableNumbers {
 
             switch(displayType) {
                 case DisplayType.None:
-                    return numberString;
+                    return number.ToString($"0.##", CultureInfo.InvariantCulture);
                 case DisplayType.Name:
                     return $"{scaledString} {suffixes[powerOf1000 - 1].Name}";
                 default:

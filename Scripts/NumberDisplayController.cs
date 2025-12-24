@@ -13,7 +13,7 @@ namespace ReadableNumbers {
         public static DisplayType CurrentDisplayType { get { return !isDisable ? currentDisplayType : DisplayType.None; } }
 
         public void Update() {
-            if(Input.GetKeyDown(KeyCode.LeftControl)) {
+            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.I)) {
                 CycleDisplayType();
             }
 

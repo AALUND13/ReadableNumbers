@@ -14,7 +14,7 @@ namespace ReadableNumbers {
     [BepInDependency("com.penial.rounds.Infoholic", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Systems.R00t.RSUI", BepInDependency.DependencyFlags.SoftDependency)]
 
-    [BepInPlugin(modId, ModName, "1.0.1")]
+    [BepInPlugin(modId, ModName, "1.0.2")]
     [BepInProcess("Rounds.exe")]
     public class ReadableNumbers : BaseUnityPlugin {
         internal const string modId = "com.aalund13.rounds.readable_numbers";

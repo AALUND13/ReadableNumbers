@@ -5,7 +5,7 @@ For "large" number like **1,000,000**, it will display as **1M**.
 
 ## Controls
 
-- **Left Control** - Toggle between "Subbfix" and "Name" number formatting.
+- **Left Control + I** - Toggle between "Subbfix" and "Name" number formatting.
 - **Right Control** - Toggle off number formatting, until you release the button.
 
 ## Mod Compatibility
