@@ -1,35 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ReadableNumbers {
-    public enum DisplayType {
-        None,
-        Name,
-        Suffix
+namespace ReadableNumbers.Formatters {
+    public struct NormalNumberSuffix {
+        public string Suffix { get; private set; }
+        public string Name { get; private set; }
+
+        public NormalNumberSuffix(string suffix, string name) {
+            Suffix = suffix;
+            Name = name;
+        }
     }
 
-    public static class NumberFormatter {
-        public static List<NumberSuffix> suffixes = new List<NumberSuffix>() {
-            new NumberSuffix("K", "Thousand"),
-            new NumberSuffix("M", "Million"),
-            new NumberSuffix("B", "Billion"),
-            new NumberSuffix("T", "Trillion"),
-            new NumberSuffix("Qa", "Quadrillion"),
-            new NumberSuffix("Qi", "Quintillion"),
-            new NumberSuffix("Sx", "Sextillion"),
-            new NumberSuffix("Sp", "Septillion"),
-            new NumberSuffix("Oc", "Octillion"),
-            new NumberSuffix("No", "Nonillion"),
-            new NumberSuffix("Dc", "Decillion"),
-            new NumberSuffix("Ud", "Undecillion")
+    public class NormalNumberFormatter : INumberFormatter {
+        public readonly NormalNumberSuffix[] suffixes = new NormalNumberSuffix[] {
+            new NormalNumberSuffix("K", "Thousand"),
+            new NormalNumberSuffix("M", "Million"),
+            new NormalNumberSuffix("B", "Billion"),
+            new NormalNumberSuffix("T", "Trillion"),
+            new NormalNumberSuffix("Qa", "Quadrillion"),
+            new NormalNumberSuffix("Qi", "Quintillion"),
+            new NormalNumberSuffix("Sx", "Sextillion"),
+            new NormalNumberSuffix("Sp", "Septillion"),
+            new NormalNumberSuffix("Oc", "Octillion"),
+            new NormalNumberSuffix("No", "Nonillion"),
+            new NormalNumberSuffix("Dc", "Decillion"),
+            new NormalNumberSuffix("Ud", "Undecillion")
         };
 
-        public static string DisplayNumber(float number, DisplayType displayType, string format = null) {
+        public string DisplayNumber(float number, DisplayType displayType, string format = null) {
             bool isNegative = number < 0f;
             float absNumber = Mathf.Abs(number);
 
@@ -57,7 +58,7 @@ namespace ReadableNumbers {
             }
 
             if(powerOf1000 <= 0) {
-                return number.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}", 
+                return number.ToString($"0.{new string('#', Mathf.Max(0, 4 - decimals))}",
                     CultureInfo.InvariantCulture);
             }
 
@@ -70,9 +71,7 @@ namespace ReadableNumbers {
                     return $"{scaledString}{suffixes[powerOf1000 - 1].Suffix}";
             }
         }
-
-
-        public static string DisplayNumber(int number, DisplayType displayType, string format = null) { 
+        public string DisplayNumber(int number, DisplayType displayType, string format = null) {
             return DisplayNumber((float)number, displayType);
         }
     }

@@ -38,13 +38,22 @@ namespace ReadableNumbers {
             }
         }
 
+        // Normal
         public static string DisplayNumber(float number, string format = null) {
-            return NumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
+            return NumberFormatters.NormalNumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
         }
 
-
         public static string DisplayNumber(int number, string format = null) {
-            return NumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
+            return NumberFormatters.NormalNumberFormatter.DisplayNumber(number, CurrentDisplayType, format);
+        }
+
+        // Time
+        public static string DisplayTime(float time, string format = null) {
+            return NumberFormatters.TimeNumberFormatter.DisplayNumber(time, CurrentDisplayType, format);
+        }
+
+        public static string DisplayTime(int seconds, string format = null) {
+            return NumberFormatters.TimeNumberFormatter.DisplayNumber(seconds, CurrentDisplayType, format);
         }
     }
 }

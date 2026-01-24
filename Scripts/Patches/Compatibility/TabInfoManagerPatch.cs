@@ -38,12 +38,18 @@ namespace ReadableNumbers.Patches.Compatibility {
         public static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions) {
             var codes = new List<CodeInstruction>(instructions);
 
+            // String Formats Methods
             MethodInfo stringFormat1 = AccessTools.Method(typeof(string), nameof(string.Format), new Type[] { typeof(string), typeof(object) });
             MethodInfo stringFormat2 = AccessTools.Method(typeof(string), nameof(string.Format), new Type[] { typeof(string), typeof(object), typeof(object) });
             MethodInfo stringFormat3 = AccessTools.Method(typeof(string), nameof(string.Format), new Type[] { typeof(string), typeof(object), typeof(object), typeof(object) });
 
+            // Normal Display Method
             MethodInfo DisplayNumberFloat = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayNumber), new Type[] { typeof(float), typeof(string) });
             MethodInfo DisplayNumberInt = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayNumber), new Type[] { typeof(int), typeof(string) });
+
+            // Time Display Method
+            MethodInfo DisplayTimeFloat = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayTime), new Type[] { typeof(float), typeof(string) });
+            MethodInfo DisplayTimeInt = AccessTools.Method(typeof(NumberDisplayController), nameof(NumberDisplayController.DisplayTime), new Type[] { typeof(int), typeof(string) });
 
             // Collect all string.Format calls (indices)
             var formatCalls = new List<int>();
@@ -66,9 +72,14 @@ namespace ReadableNumbers.Patches.Compatibility {
                 ReadableNumbers.ModLogger.LogInfo($"Found string.Format call at index {index} with {argCount} argument(s)");
 
                 string formatString = "";
+                bool isTime = false;
                 for(int j = index - 1; j >= 0; j--) {
-                    if(codes[j].opcode == OpCodes.Ldstr) {
+                    if(codes[j].opcode == OpCodes.Ldstr && codes[j + 1].opcode == OpCodes.Ldarg_1) {
                         formatString = codes[j].operand.ToString();
+                        if(formatString.EndsWith("s", StringComparison.OrdinalIgnoreCase)) {
+                            codes[j].operand = formatString.Substring(0, formatString.Length - 1);
+                            isTime = true;
+                        }
                         ReadableNumbers.ModLogger.LogInfo($"Format: {codes[j].operand.ToString()}");
                         break;
                     }
@@ -77,6 +88,7 @@ namespace ReadableNumbers.Patches.Compatibility {
                         .Cast<Match>()
                         .Select(m => m.Groups[1].Value)
                         .ToArray();
+
 
                 int parmIndex = 0;
                 for(int j = index - 1; j >= index - (argCount * 5) && j >= 0; j--) {
@@ -88,10 +100,10 @@ namespace ReadableNumbers.Patches.Compatibility {
 
                         if(boxedType == typeof(float)) {
                             codes[j] = new CodeInstruction(OpCodes.Ldstr, formatSpec);
-                            codes.Insert(j + 1, new CodeInstruction(OpCodes.Call, DisplayNumberFloat));
+                            codes.Insert(j + 1, new CodeInstruction(OpCodes.Call, isTime ? DisplayTimeFloat : DisplayNumberFloat));
                         } else if(boxedType == typeof(int)) {
                             codes[j] = new CodeInstruction(OpCodes.Ldstr, formatSpec);
-                            codes.Insert(j + 1, new CodeInstruction(OpCodes.Call, DisplayNumberInt));
+                            codes.Insert(j + 1, new CodeInstruction(OpCodes.Call, isTime ? DisplayTimeInt : DisplayNumberInt));
                         }
 
                         parmIndex++;
